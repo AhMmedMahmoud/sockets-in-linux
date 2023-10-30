@@ -1,6 +1,6 @@
 # sockets-in-linux
 
-# build instructio
+# build instructions
 ```cmake
 mkdir build
 cd build
