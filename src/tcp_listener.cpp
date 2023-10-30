@@ -23,7 +23,9 @@ namespace AsyncBsdSocketLib
         {
             // Option value
             int _opt = 1;
-            // Configuring socket option for reusing the port
+            // Configuring socket option for reusing the port and the address
+            // combine two options: SO_REUSEADDR and SO_REUSEPORT. These options allow the reuse of local addresses and ports.
+            // setsockopt allows you to set various options for a socket. 
             _result =
                 (setsockopt(
                      FileDescriptor,
