@@ -1,4 +1,5 @@
 # sockets-in-linux
+This is  POSIX network socket library over TCP/IP for Liunx.
 
 # build instructions
 ```cmake
