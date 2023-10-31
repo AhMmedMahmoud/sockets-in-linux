@@ -7,7 +7,6 @@
 using namespace AsyncBsdSocketLib;
 
 
-
 int main()
 {
     const std::string cIpAddress = "127.0.0.1";
@@ -34,6 +33,7 @@ int main()
         _succeed = client->TryConnect();
     }
     std::cout << "client side ---> The client connected to the server.\n";
+
     
     while(1)
     {

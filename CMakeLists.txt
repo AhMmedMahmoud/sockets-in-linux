@@ -18,7 +18,8 @@ target_include_directories(async_bsd_socket_lib
 )
 
 
-########### server ##########
+
+########### client ##########
 add_executable(client
   samples/demo_client.cpp
 )

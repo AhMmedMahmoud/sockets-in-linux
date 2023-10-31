@@ -12,7 +12,17 @@ namespace AsyncBsdSocketLib
     class TcpClient : public NetworkSocket
     {
     private:
-        struct sockaddr_in mAddress;
+        /*
+        define object of struct sockaddr_in which is 
+           - provided by netinet/in.h
+           - used to store socket info
+           - has three variables
+              - one for store family address
+              - one for store ip address
+              - one for store port nuumber
+        this object isnot initialized yet so its values to be set explicitly
+        */
+        struct sockaddr_in mAddress;     
         bool mIsConnected;
 
     public:

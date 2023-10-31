@@ -21,16 +21,10 @@ namespace AsyncBsdSocketLib
     public:
         TcpListener() = delete;
 
-        /// @brief Constructor to listen on any IP address
-        /// @param port Listen port number
-        TcpListener(uint16_t port);
-
         /// @brief Constructor
         /// @param ipAddress Listen IP address
         /// @param port Listen port number
         TcpListener(std::string ipAddress, uint16_t port);
-
-        int Connection() const noexcept override;
 
         bool TrySetup() noexcept override;
 
@@ -71,6 +65,8 @@ namespace AsyncBsdSocketLib
         /// @brief Try to make the current connection (if exists) non-block
         /// @returns True if the non-blocking flag is set successfully; otherwise false
         bool TryMakeConnectionNonblock() noexcept;
+
+        int Connection() const noexcept override;
     };
 }
 

@@ -22,6 +22,7 @@ int main()
     std::cout << "server side ---> Socket setups were successful.\n";
 
 
+    // block until client connect
     bool _accepted = server->TryAccept();
     if (_accepted)
     {
@@ -42,6 +43,11 @@ int main()
                     std::cout <<  static_cast<char>(cReceiveBuffer[i]);
                 }
                 std::cout << "' from the client \n";
+            }
+            else
+            {
+                std::cout << "server side ---> The client terminates.\n";
+                return -1;
             }
         }
     }
