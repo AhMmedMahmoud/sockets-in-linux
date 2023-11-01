@@ -1,6 +1,6 @@
 #include "../include/network_socket.h"
 
-namespace AsyncBsdSocketLib
+namespace POSIXNetworkSocketLib
 {
     NetworkSocket::NetworkSocket(std::string ipAddress, uint16_t port) : IpAddress{ipAddress},
                                                                          Port{port},

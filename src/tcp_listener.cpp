@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-namespace AsyncBsdSocketLib
+namespace POSIXNetworkSocketLib
 {
     TcpListener::TcpListener(std::string ipAddress, uint16_t port) : NetworkSocket(ipAddress, port),
                                                                      mConnection{-1}

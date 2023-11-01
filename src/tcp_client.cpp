@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-namespace AsyncBsdSocketLib
+namespace POSIXNetworkSocketLib
 {
     TcpClient::TcpClient(std::string ipAddress, uint16_t port) : NetworkSocket(ipAddress, port),
                                                                  mIsConnected{false}

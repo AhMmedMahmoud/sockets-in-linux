@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 
-namespace AsyncBsdSocketLib
+namespace POSIXNetworkSocketLib
 {
     /// @brief TCP/IP network socket
     class NetworkSocket

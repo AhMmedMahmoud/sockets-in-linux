@@ -4,17 +4,23 @@
 #include <chrono>
 #include <thread>
 
-using namespace AsyncBsdSocketLib;
+using namespace POSIXNetworkSocketLib;
 
+#define clientAndServerInSameMachine 1
 
 int main()
 {
-    const std::string cIpAddress = "127.0.0.1";
-    const uint16_t cPort = 9900;
+    #if clientAndServerInSameMachine
+        const std::string IpAddress = "127.0.0.1";
+    #else
+        const std::string cIpAddress = "192.168.36.116";   // ip address of server  (using "hostname -I" command in terminal to get it)
+    #endif
+
+    const uint16_t Port = 9900;
 
     TcpClient *client;
 
-    client = new TcpClient(cIpAddress, cPort);
+    client = new TcpClient(IpAddress, Port);
 
     /******** try to setup socket **********/
     bool _succeed = client->TrySetup();

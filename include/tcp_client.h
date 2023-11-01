@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include "network_socket.h"
 
-namespace AsyncBsdSocketLib
+namespace POSIXNetworkSocketLib
 {
     class TcpClient : public NetworkSocket
     {

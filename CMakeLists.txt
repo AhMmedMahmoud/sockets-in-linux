@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(Async_BSD_Socket_Lib)
+project(POSIXNetworkSocketLib)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 
 add_library(
-  async_bsd_socket_lib
+  POSIXNetworkSocketLib
   src/network_socket.cpp
   src/tcp_client.cpp
   src/tcp_listener.cpp
 )
 
-target_include_directories(async_bsd_socket_lib
+target_include_directories(POSIXNetworkSocketLib  
   INTERFACE include
 )
 
@@ -27,7 +27,7 @@ add_executable(client
 
 target_link_libraries(client
   pthread
-  async_bsd_socket_lib
+  POSIXNetworkSocketLib
 )
 
 
@@ -39,5 +39,5 @@ add_executable(server
 
 target_link_libraries(server
   pthread
-  async_bsd_socket_lib
+  POSIXNetworkSocketLib
 )

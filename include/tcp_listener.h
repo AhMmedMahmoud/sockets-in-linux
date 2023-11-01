@@ -6,7 +6,7 @@
 #include <array>
 #include "network_socket.h"
 
-namespace AsyncBsdSocketLib
+namespace POSIXNetworkSocketLib
 {
     /// @brief TCP listener (server) to accept a TcpClient
     /// @see TcpClient

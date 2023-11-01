@@ -1,0 +1,31 @@
+"0.0.0.0" 
+    - called "wildcard" or "any" address.
+  
+    - special IP address is used to make the socket able to listen incoming connections from any IP address 
+    that the machine is associated with, whether it's a local address, a LAN address, or a public address.
+  
+    - given to the server only as you cannot bind a server socket to a specific client address.
+    because the server socket is responsible for accepting connections from multiple clients, not just a single client.
+    The client address is determined dynamically when a client connects to the server socket.
+        
+        - If you want to restrict the server to only accept connections from specific clients,
+        you would need to implement that logic within your server application. After accepting a connection,
+        you can check the client address and decide whether to continue processing the connection or
+        reject it based on your specific criteria.
+
+
+
+"127.0.0.1"
+    - called "loopback" or "localhost" address.
+  
+    - special IP address is used to bind the socket to the loopback interface of the machine.
+    (a standard feature provided by network stack on operating system) that allows communication within the same machine.
+
+    - special IP address is used to make the socket able to only accept connections originating from the same machine.
+
+    - given to client or server to allow communication within the same machine.
+
+
+"192.168.36.116"
+    - address of server getten using "hostname -I"
+    - given to client only

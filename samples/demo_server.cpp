@@ -1,17 +1,24 @@
 #include <iostream>
 #include "../include/tcp_listener.h"
 
-using namespace AsyncBsdSocketLib;
+using namespace POSIXNetworkSocketLib;
+
+#define clientAndServerInSameMachine 1
 
 
 int main()
 {
-    const std::string cIpAddress = "127.0.0.1";
-    const uint16_t cPort = 9900;
+    #ifdef clientAndServerInSameMachine
+        const std::string IpAddress = "127.0.0.1";
+    #else
+        const std::string cIpAddress = "0.0.0.0";
+    #endif
+
+    const uint16_t Port = 9900;
 
     TcpListener *server;
 
-    server = new TcpListener(cIpAddress, cPort);
+    server = new TcpListener(IpAddress, Port);
 
     bool _succeed = server->TrySetup();
     if (!_succeed)
