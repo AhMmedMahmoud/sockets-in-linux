@@ -27,5 +27,5 @@
 
 
 "192.168.36.116"
-    - address of server getten using "hostname -I"
+    - address of server getten using "hostname -I" from terminal in linux
     - given to client only
