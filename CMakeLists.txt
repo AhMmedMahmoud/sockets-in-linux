@@ -9,8 +9,9 @@ include_directories(include)
 add_library(
   POSIXNetworkSocketLib
   src/network_socket.cpp
-  src/tcp_client.cpp
-  src/tcp_listener.cpp
+  src/TCPClient.cpp
+  src/TCPServer.cpp
+  src/UDPClientServer.cpp
 )
 
 target_include_directories(POSIXNetworkSocketLib  
@@ -19,25 +20,46 @@ target_include_directories(POSIXNetworkSocketLib
 
 
 
-########### client ##########
-add_executable(client
-  samples/demo_client.cpp
+########### client TCP ##########
+add_executable(client_tcp
+  samples/demo_TCPClient.cpp
 )
 
-
-target_link_libraries(client
+target_link_libraries(client_tcp
   pthread
   POSIXNetworkSocketLib
 )
 
 
-########### server ##########
-add_executable(server
-  samples/demo_server.cpp
+########### server TCP ##########
+add_executable(server_tcp
+  samples/demo_TCPServer.cpp
+)
+
+target_link_libraries(server_tcp
+  pthread
+  POSIXNetworkSocketLib
 )
 
 
-target_link_libraries(server
+
+########### client UDp ##########
+add_executable(client_udp
+  samples/demo_UDPClient.cpp
+)
+
+target_link_libraries(client_udp
+  pthread
+  POSIXNetworkSocketLib
+)
+
+
+########### server UDp ##########
+add_executable(server_udp
+  samples/demo_UDPServer.cpp
+)
+
+target_link_libraries(server_udp
   pthread
   POSIXNetworkSocketLib
 )

@@ -29,3 +29,146 @@
 "192.168.36.116"
     - address of server getten using "hostname -I" from terminal in linux
     - given to client only
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The "TrySetup" function is used to set up the UDP client socket.
+ It first creates a socket using the socket() function with the AF_INET (IPv4) address family and SOCK_DGRAM (UDP) socket type.
+  The resulting file descriptor is stored in the "FileDescriptor" member variable.
+
+If the socket creation is successful, it checks if the socket is configured for multicast and if the address can be shared.
+ If multicast is enabled and address sharing is requested, it enables the SO_REUSEADDR option using the setsockopt() function.
+
+Next, it creates a sockaddr_in structure and sets the IP address, address family, and port number.
+ It then binds the socket to the specified address and port using the bind() function.
+
+If multicast is enabled and the binding is successful, it proceeds to set the multicast socket options. It creates another sockaddr_in structure to store the NIC IP address and sets the IP_MULTICAST_IF option using setsockopt() to enable sending multicast traffic through the specified NIC.
+
+Finally, it creates an ip_mreq structure to store the multicast group information (NIC IP address and multicast IP address) and subscribes to the multicast group for receiving multicast traffic using the setsockopt() function with the IP_ADD_MEMBERSHIP option.
+
+The function returns true if the setup is successful, and false otherwise.
+
+In summary, this code sets up a UDP client socket by creating a socket, binding it to a specified address and port, and configuring multicast options if necessary.
+ The IP addresses used in the code include the client's IP address, NIC IP address, and multicast IP address.
+
+
+
+
+
+
+
+
+
+
+
+When sending and receiving packets, various IP addresses are used to identify
+- the source and destination of the communication.
+
+
+Here is an explanation of the theoretical information related to IP addresses used in packet transmission:
+
+Source IP Address: The source IP address identifies the sender or the source of the packet. It is a unique numerical address assigned to the device (such as a computer or a server) that initiates the communication. The source IP address is used by the receiving device to send response packets back to the sender.
+
+Destination IP Address: The destination IP address identifies the intended recipient of the packet. It is a unique numerical address assigned to the device that should receive the packet. When a packet is sent, it is addressed to the destination IP address so that it reaches the correct destination.
+
+NIC IP Address: The NIC IP address refers to the IP address assigned to the network interface card (NIC) of a device. Each device connected to a network has one or more NICs, and each NIC has its own unique IP address. The NIC IP address is used to specify the network interface through which the packet should be sent or received.
+
+Multicast IP Address: A multicast IP address is used for multicast communication, where a single packet is sent from a source to multiple recipients who have expressed interest in receiving the multicast traffic. Multicast IP addresses are within a specific range reserved for multicast communication. The multicast IP address is used to identify the multicast group to which the packet belongs and to ensure that it reaches the intended recipients.
+
+In summary, the source IP address identifies the sender, the destination IP address identifies the recipient, the NIC IP address specifies the network interface, and the multicast IP address is used for multicast communication. These IP addresses play crucial roles in ensuring that packets are sent to the correct destinations and that devices can communicate effectively over a network.
+
+
+
+
+
+
+
+
+the bind() function is used to associate a socket with a specific IP address and port number.
+
+The IP address passed to bind() can be in one of the following forms:
+    IPv4 Address: An example IPv4 address is "192.168.0.1". It represents a specific network interface on the computer.
+    Binding to the specific address allows the socket to listen on this ip address only.
+
+    Any Address: The value "0.0.0.0"  represents any available network interface on the computer(ethrnet-wifi-loopback-bluetooth). 
+    Binding to the any address allows the socket to listen on all available interfaces.
+
+    loopback Address: The value "127.0.0.1" represents loopback network interface (the local machine itself)
+    Binding to the loopback address allows the socket to listen on processes running on the same machine only.
+
+
+In the context of the bind() function, if you bind a socket to the IP address 127.0.0.1 and a specific port, the socket will only accept connections or data sent to that IP address on the local machine. Other devices or machines on the network will not be able to reach that socket.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+the NIC (Network Interface Card) IP address can take values other than "127.0.0.1". In fact, "127.0.0.1" is a special IP address known as the loopback address, which is used to test network connectivity on a local machine without actually sending packets to the network.
+
+In a typical network setup, each NIC on a device is assigned a unique IP address that is associated with a specific network. For example, if a device is connected to a local area network (LAN), it may be assigned an IP address like "192.168.0.2" or "10.0.0.2". The NIC IP address is used to identify the device on the network and to establish communication with other devices.
+
+The specific value of the NIC IP address depends on the network configuration and the IP address allocation scheme used. It can be assigned manually (static IP address) or obtained dynamically from a DHCP (Dynamic Host Configuration Protocol) server.
+
+In summary, the NIC IP address can take values other than "127.0.0.1" and is typically associated with a specific network to identify the device on that network.
+
+- loopback
+- wireless 
+- ethrnet
+
+
+
+
+
+
+
+
+
+
+In UDP (User Datagram Protocol) sockets, the NIC (Network Interface Card) IP address and multicast IP address have specific usages:
+
+    NIC IP address: The NIC IP address is used to bind the UDP socket to a specific network interface on the local machine. By specifying the NIC IP address in the bind() function, you can control which network interface the UDP socket will use for sending and receiving UDP packets. This is particularly useful in situations where a machine has multiple network interfaces, such as multiple Ethernet ports or Wi-Fi adapters. Binding the socket to a specific NIC IP address allows you to select the desired network interface for communication.
+
+    Multicast IP address: A multicast IP address is used to send UDP packets to a group of recipients who have joined a specific multicast group. With multicast, a single sender can send a packet to multiple receivers who have subscribed to the multicast group. The multicast IP address defines the group to which the packet is sent. In the context of UDP sockets, you can use the sendto() function to send UDP packets to a multicast IP address, and the recvfrom() function to receive UDP packets from a multicast IP address.
+
+By utilizing the NIC IP address and multicast IP address in UDP sockets, you can control the network interface used for communication and send/receive packets to/from multicast groups, respectively.
