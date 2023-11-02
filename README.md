@@ -1,5 +1,5 @@
 # sockets-in-linux
-This is  POSIX network socket library over TCP/IP for Liunx.
+This is  POSIX network socket library over TCP/IP or UDP/IP for Liunx.
 
 # build instructions
 ```cmake
