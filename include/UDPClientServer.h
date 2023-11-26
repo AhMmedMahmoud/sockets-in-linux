@@ -9,22 +9,29 @@
 
 namespace POSIXNetworkSocketLib
 {
-    /// @brief UDP client which can play both client and listener roles
-    class UdpClient : public NetworkSocket
+    class UdpClientServer : public NetworkSocket
     {
     private:
+        /******************************* extra attributes *************************/
+
         std::string mNicIpAddress;
         std::string mMulticastIpAddress;
         bool mIsMulticast;
         bool mShareAddress;
 
     public:
-        UdpClient() = delete;
+        /************************ disable empty constructor ***********************/
+
+        UdpClientServer() = delete;
+
+
+
+        /******************************* constructors ******************************/
 
         /// @brief Unicast UDP socket constructor
         /// @param ipAddress Binding IP address
         /// @param port Binding port number
-        UdpClient(std::string ipAddress, uint16_t port);
+        UdpClientServer(std::string ipAddress, uint16_t port);
 
         /// @brief Multicast UDP socket constructor
         /// @param ipAddress Binding IP address
@@ -32,16 +39,23 @@ namespace POSIXNetworkSocketLib
         /// @param nicIpAddress Multicast traffic network interface IP address
         /// @param multicastIpAddress Multicast group traffic IP address
         /// @param shareAddress Indicates whether to share the multicast listening address or not
-        UdpClient(
+        UdpClientServer(
             std::string ipAddress,
             uint16_t port,
             std::string nicIpAddress,
             std::string multicastIpAddress,
             bool shareAddress = true);
 
-        int Connection() const noexcept override;
+
+
+        /*********************** override functions inherited from parent *********/
 
         bool TrySetup() noexcept override;
+        int Connection() const noexcept override;
+
+
+
+        /**************************** fundemental functions *************************/
 
         /// @brief Send a byte array to a destination
         /// @tparam N Send buffer size

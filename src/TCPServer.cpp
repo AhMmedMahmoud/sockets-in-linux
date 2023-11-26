@@ -7,10 +7,15 @@
 
 namespace POSIXNetworkSocketLib
 {
+    /******************************* constructor ******************************/
+
     TcpListener::TcpListener(std::string ipAddress, uint16_t port) : NetworkSocket(ipAddress, port),
                                                                      mConnection{-1}
     {}
 
+    
+
+    /*********************** override functions inherited from parent *********/
 
     bool TcpListener::TrySetup() noexcept
     {
@@ -33,6 +38,7 @@ namespace POSIXNetworkSocketLib
                 mAddress.sin_port = htons(Port);
 
                 std::cout << "-----------------Socket info--------------\n";
+                std::cout << "FD: " << FileDescriptor << std::endl;
                 if(mAddress.sin_family == AF_INET) 
                     std::cout << "IPv4 Address" << std::endl;
                 else if (mAddress.sin_family == AF_INET6) 
@@ -47,7 +53,8 @@ namespace POSIXNetworkSocketLib
                 _result = (  bind(FileDescriptor, (struct sockaddr *)&mAddress, sizeof(mAddress)) == 0  );
                 if (_result)
                 {
-                    _result = (  listen(FileDescriptor, cBacklog) == 0  );
+                    // cBacklog = 3
+                    _result = (  listen(FileDescriptor, 3) == 0  );
                 }
             }
         }
@@ -55,12 +62,18 @@ namespace POSIXNetworkSocketLib
         return _result;
     }
 
+    int TcpListener::Connection() const noexcept
+    {
+        return mConnection;
+    }
+
+
+
+    /**************************** fundemental functions *************************/
 
     bool TcpListener::TryAccept() noexcept
     {
-        int _addressLength = sizeof(mAddress);
-        
-        std::cout << "server side ---> blocking until client connects.\n";
+        int _addressLength = sizeof(mAddress);        
         mConnection = accept(FileDescriptor, (struct sockaddr *)&mAddress, (socklen_t *)&_addressLength);
 
         bool _result = (mConnection >= 0);
@@ -91,11 +104,5 @@ namespace POSIXNetworkSocketLib
         bool _result = (_returnCode != -1);
 
         return _result;
-    }
-
-
-    int TcpListener::Connection() const noexcept
-    {
-        return mConnection;
     }
 }

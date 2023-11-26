@@ -2,11 +2,25 @@
 
 namespace POSIXNetworkSocketLib
 {
+    /***************** useful for constructor of my child **********************/
+
     NetworkSocket::NetworkSocket(std::string ipAddress, uint16_t port) : IpAddress{ipAddress},
                                                                          Port{port},
                                                                          FileDescriptor{-1}
     {}
 
+
+
+    /********************************** getters ******************************/
+
+    int NetworkSocket::Descriptor() const noexcept
+    {
+        return FileDescriptor;
+    }
+
+
+
+    /**************************** fundemental functions *******************/
 
     bool NetworkSocket::TryClose() noexcept
     {
@@ -21,6 +35,10 @@ namespace POSIXNetworkSocketLib
 
         return _result;
     }
+
+
+    
+    /***********************  virtual deconstructor **************************/
 
     NetworkSocket::~NetworkSocket() noexcept
     {

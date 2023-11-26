@@ -45,7 +45,8 @@ int main()
     {
         const std::size_t cBufferSize = 5;
         const std::array<uint8_t, cBufferSize> cSendBuffer = {0x48, 0x65, 0x6c, 0x6c, 0x6f};
-
+        std::array<uint8_t, cBufferSize> cReceiveBuffer;
+        
         bool _sent = client->Send(cSendBuffer) > 0;
         if (_sent)
         {

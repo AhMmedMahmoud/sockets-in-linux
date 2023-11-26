@@ -11,22 +11,31 @@ namespace POSIXNetworkSocketLib
 {
     class TcpClient : public NetworkSocket
     {
-    private:
         /*
-        define object of struct sockaddr_in which is 
-           - provided by netinet/in.h
-           - used to store socket info
+        struct sockaddr_in 
+           - used to store socket info 
+              - APIs of sockets (connect) knows socket info 
+                like ip address for IPv4, ip address for IPv6, port number
            - has three variables
               - one for store family address
               - one for store ip address
               - one for store port nuumber
-        this object isnot initialized yet so its values to be set explicitly
         */
+
+    private:
+        /******************************* extra attributes *************************/
+
         struct sockaddr_in mAddress;     
         bool mIsConnected;
 
     public:
+        /************************ disable empty constructor ***********************/
+
         TcpClient() = delete;
+
+
+
+        /******************************* constructor ******************************/
 
         /// @brief Constructor
         /// @param ipAddress Server IP address
@@ -35,15 +44,26 @@ namespace POSIXNetworkSocketLib
 
 
 
+        /**************************** getters *************************/
+
+        /// @brief Inidicates whether the client is connected or not
+        /// @returns True if the client is connected; otherwise false
+        bool IsConnected() const noexcept;
+
+
+
+        /*********************** override functions inherited from parent *********/
+
         bool TrySetup() noexcept override;
+        int Connection() const noexcept override;
 
 
+
+        /**************************** fundemental functions *************************/
 
         /// @brief Try to connect to the server
         /// @returns True if the client is successfully connected; otherwise false
         bool TryConnect() noexcept; 
-
-
 
         /// @brief Send a byte array to the connected client
         /// @tparam N Send buffer size
@@ -56,8 +76,6 @@ namespace POSIXNetworkSocketLib
             return _result;
         }
 
-
-
         /// @brief Receive a byte array from the connected client
         /// @tparam N Receive buffer size
         /// @param buffer Receive buffer byte array
@@ -69,16 +87,6 @@ namespace POSIXNetworkSocketLib
             ssize_t _result = recv(FileDescriptor, buffer.data(), N, 0);
             return _result;
         }
-
-
-
-        /// @brief File descriptor
-        /// @returns A non-negative number if the NetworkSocket has been already set up
-        int Connection() const noexcept override;
-
-        /// @brief Inidicates whether the client is connected or not
-        /// @returns True if the client is connected; otherwise false
-        bool IsConnected() const noexcept;
     };
 }
 

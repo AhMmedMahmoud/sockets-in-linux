@@ -3,14 +3,15 @@
 
 namespace POSIXNetworkSocketLib
 {
-    UdpClient::UdpClient(
+    /******************************* constructors ******************************/
+
+    UdpClientServer::UdpClientServer(
         std::string ipAddress, uint16_t port) : NetworkSocket(ipAddress, port),
                                                 mIsMulticast{false},
                                                 mShareAddress{false}
-    {
-    }
+    {}
 
-    UdpClient::UdpClient(
+    UdpClientServer::UdpClientServer(
         std::string ipAddress,
         uint16_t port,
         std::string nicIpAddress,
@@ -20,15 +21,13 @@ namespace POSIXNetworkSocketLib
                              mMulticastIpAddress{multicastIpAddress},
                              mIsMulticast{true},
                              mShareAddress{shareAddress}
-    {
-    }
+    {}
 
-    int UdpClient::Connection() const noexcept
-    {
-        return FileDescriptor;
-    }
 
-    bool UdpClient::TrySetup() noexcept
+
+    /*********************** override functions inherited from parent *********/
+
+    bool UdpClientServer::TrySetup() noexcept
     {
         FileDescriptor = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -91,7 +90,11 @@ namespace POSIXNetworkSocketLib
                                 sizeof(_multicastGroup)) > -1);
             }
         }
-
         return _result;
+    }
+
+    int UdpClientServer::Connection() const noexcept
+    {
+        return FileDescriptor;
     }
 }

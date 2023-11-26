@@ -16,8 +16,8 @@ const uint16_t cPort{5555};
 int main()
 {
 
-    UdpClient *server;
-    server = new UdpClient(cAnyIpAddress, cPort, cNicIpAddress, cMulticastGroup, true);
+    UdpClientServer *server;
+    server = new UdpClientServer(cAnyIpAddress, cPort, cNicIpAddress, cMulticastGroup, true);
 
     bool _succeed = server->TrySetup();
     if (!_succeed)

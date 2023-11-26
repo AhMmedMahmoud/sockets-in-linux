@@ -12,6 +12,7 @@ add_library(
   src/TCPClient.cpp
   src/TCPServer.cpp
   src/UDPClientServer.cpp
+  src/poller.cpp
 )
 
 target_include_directories(POSIXNetworkSocketLib  
@@ -60,6 +61,28 @@ add_executable(server_udp
 )
 
 target_link_libraries(server_udp
+  pthread
+  POSIXNetworkSocketLib
+)
+
+
+########### TCPServerPoller ##########
+add_executable(TCPServerPoller
+  samples/demo_TcpServerPoller.cpp
+)
+
+target_link_libraries(TCPServerPoller
+  pthread
+  POSIXNetworkSocketLib
+)
+
+
+########### TCPCLientPoller ##########
+add_executable(TCPCLientPoller
+samples/demo_TCPClientPoller.cpp
+)
+
+target_link_libraries(TCPCLientPoller
   pthread
   POSIXNetworkSocketLib
 )

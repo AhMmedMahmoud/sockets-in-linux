@@ -7,9 +7,24 @@
 
 namespace POSIXNetworkSocketLib
 {
+    /******************************* constructor ******************************/
+
     TcpClient::TcpClient(std::string ipAddress, uint16_t port) : NetworkSocket(ipAddress, port),
                                                                  mIsConnected{false}
     {}
+
+
+
+    /**************************** getters *************************/
+
+    bool TcpClient::IsConnected() const noexcept
+    {
+        return mIsConnected;
+    }
+
+
+
+    /*********************** override functions inherited from parent *********/
 
     bool TcpClient::TrySetup() noexcept
     {
@@ -36,6 +51,7 @@ namespace POSIXNetworkSocketLib
             mAddress.sin_port = htons(Port);
 
             std::cout << "-----------------Socket info--------------\n";
+            std::cout << "FD: " << FileDescriptor << std::endl;
             if(mAddress.sin_family == AF_INET) 
                 std::cout << "IPv4 Address" << std::endl;
             else if (mAddress.sin_family == AF_INET6) 
@@ -49,19 +65,16 @@ namespace POSIXNetworkSocketLib
         return _result;
     }
 
-    bool TcpClient::TryConnect() noexcept
-    {
-        mIsConnected = (  connect(FileDescriptor, (struct sockaddr *)&mAddress, sizeof(mAddress))   == 0);
-        return mIsConnected;
-    }
-    
     int TcpClient::Connection() const noexcept
     {
         return FileDescriptor;
     }
 
-    bool TcpClient::IsConnected() const noexcept
+
+
+    bool TcpClient::TryConnect() noexcept
     {
+        mIsConnected = (  connect(FileDescriptor, (struct sockaddr *)&mAddress, sizeof(mAddress))   == 0);
         return mIsConnected;
     }
 }
