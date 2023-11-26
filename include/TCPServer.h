@@ -23,10 +23,14 @@ namespace POSIXNetworkSocketLib
 
     private:
         /******************************* extra attributes *************************/
-
-        struct sockaddr_in mAddress;
+        
         int mConnection;    //  -1         :  not accepted any client
                             //  value > 0  :  FD of new socket opened to serve the client
+
+    protected:    
+        /****************************** for me and my child ***********************/
+
+        struct sockaddr_in mAddress;
 
     public:
         /************************ disable empty constructor ***********************/

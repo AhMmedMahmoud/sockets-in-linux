@@ -12,8 +12,6 @@ bool running;
 Poller *poller;
 TcpListener *server;
 
-//bool isServerBusy;
-
 void onReceive()
 {
     std::cout << "............. on Receive ............\n";
@@ -30,7 +28,6 @@ void onReceive()
     {
         std::cout << "receive from OS that socket is closed by client\n";
         std::cout << "server side ---> waitting until client connects\n\n";
-        //isServerBusy = false;
     }
 }
 
@@ -51,31 +48,23 @@ void onSend()
 void onAccept()
 {
     std::cout << "............. on Accept ............\n";
-    //if(isServerBusy == false)
-    //{
-        bool _accepted = server->TryAccept();
-        if (_accepted)
-        {
-            //isServerBusy = true;
-            std::cout << "The server accepted the client.\n\n";
-            server->TryMakeConnectionNonblock();
-            poller->TryAddReceiver(server, &onReceive);
-        }
-        else
-        {
-            std::cout << "The server declined the client.\n\n";
-            running = false;
-        }
-    //}
-    //else
-    //{
-    //    std::cout << "The server is busy with client\n\n";
-    //}
+ 
+    bool _accepted = server->TryAccept();
+    if (_accepted)
+    {
+        std::cout << "The server accepted the client.\n\n";
+        server->TryMakeConnectionNonblock();
+        poller->TryAddReceiver(server, &onReceive);
+    }
+    else
+    {
+        std::cout << "The server declined the client.\n\n";
+        running = false;
+    }
 }
 
 void tester(const int cTimeoutMs)
 {
-    //isServerBusy = false;
     std::cout << "server side ---> waitting until client connects.\n\n";
     while (running)
     {

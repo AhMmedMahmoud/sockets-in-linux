@@ -13,6 +13,9 @@ add_library(
   src/TCPServer.cpp
   src/UDPClientServer.cpp
   src/poller.cpp
+
+
+  src/TCPServerMultipleClient.cpp
 )
 
 target_include_directories(POSIXNetworkSocketLib  
@@ -83,6 +86,19 @@ samples/demo_TCPClientPoller.cpp
 )
 
 target_link_libraries(TCPCLientPoller
+  pthread
+  POSIXNetworkSocketLib
+)
+
+
+
+
+########### server TCP ##########
+add_executable(server_multipleClient_tcp
+  samples/demo_TCPServerMultipleClient.cpp
+)
+
+target_link_libraries(server_multipleClient_tcp
   pthread
   POSIXNetworkSocketLib
 )
