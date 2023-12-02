@@ -14,7 +14,6 @@ add_library(
   src/UDPClientServer.cpp
   src/poller.cpp
 
-
   src/TCPServerMultipleClient.cpp
 )
 
@@ -92,13 +91,23 @@ target_link_libraries(TCPCLientPoller
 
 
 
-
-########### server TCP ##########
-add_executable(server_multipleClient_tcp
-  samples/demo_TCPServerMultipleClient.cpp
+########### UDPServerPoller ##########
+add_executable(UDPServerPoller
+  samples/demo_UDPServerPoller.cpp
 )
 
-target_link_libraries(server_multipleClient_tcp
+target_link_libraries(UDPServerPoller
+  pthread
+  POSIXNetworkSocketLib
+)
+
+
+########### UDPCLientPoller ##########
+add_executable(UDPClientPoller
+samples/demo_UDPClientPoller.cpp
+)
+
+target_link_libraries(UDPClientPoller
   pthread
   POSIXNetworkSocketLib
 )

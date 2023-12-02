@@ -14,7 +14,7 @@ namespace POSIXNetworkSocketLib
     private:
         /******************************* extra attributes *************************/
 
-        std::string mNicIpAddress;
+        std::string mNicIpAddress;   // select network inteface adaptor in our case --> local --> 127.0.0.1
         std::string mMulticastIpAddress;
         bool mIsMulticast;
         bool mShareAddress;
@@ -26,12 +26,16 @@ namespace POSIXNetworkSocketLib
 
 
 
-        /******************************* constructors ******************************/
+        /********************* constructor for unicast ****************************/
 
         /// @brief Unicast UDP socket constructor
         /// @param ipAddress Binding IP address
         /// @param port Binding port number
         UdpClientServer(std::string ipAddress, uint16_t port);
+
+
+
+        /********************* constructor for unicast ****************************/
 
         /// @brief Multicast UDP socket constructor
         /// @param ipAddress Binding IP address
@@ -51,9 +55,8 @@ namespace POSIXNetworkSocketLib
         /*********************** override functions inherited from parent *********/
 
         bool TrySetup() noexcept override;
-        int Connection() const noexcept override;
 
-
+        
 
         /**************************** fundemental functions *************************/
 
@@ -127,6 +130,12 @@ namespace POSIXNetworkSocketLib
 
             return _result;
         }
+
+
+
+        /************************** getter *********************************/
+
+        int Connection() const noexcept override;
     };
 }
 
