@@ -1,6 +1,5 @@
 #include <iostream>
 #include <future>
-#include <csignal>
 #include "../include/poller.h"
 #include "../include/UDPClientServer.h"
 #include "../include/concurrent_queue.h"
