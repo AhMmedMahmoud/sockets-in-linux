@@ -45,29 +45,6 @@ target_link_libraries(server_tcp
 )
 
 
-
-########### client UDp ##########
-add_executable(client_udp
-  samples/demo_UDPClient.cpp
-)
-
-target_link_libraries(client_udp
-  pthread
-  POSIXNetworkSocketLib
-)
-
-
-########### server UDp ##########
-add_executable(server_udp
-  samples/demo_UDPServer.cpp
-)
-
-target_link_libraries(server_udp
-  pthread
-  POSIXNetworkSocketLib
-)
-
-
 ########### TCPServerPoller ##########
 add_executable(TCPServerPoller
   samples/demo_TcpServerPoller.cpp
