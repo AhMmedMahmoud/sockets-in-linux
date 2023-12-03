@@ -1,12 +1,23 @@
 #include <iostream>
 #include <future>
+#include <csignal>
 #include "../include/poller.h"
 #include "../include/UDPClientServer.h"
 #include "../include/concurrent_queue.h"
 #include <algorithm>
 
-
 using namespace POSIXNetworkSocketLib;
+
+// showing sequence only
+#include <chrono>
+void printCurrentTime()
+{
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    auto currentTimeSinceEpoch = currentTime.time_since_epoch();
+    auto micros = std::chrono::duration_cast<std::chrono::microseconds>(currentTimeSinceEpoch);
+    std::cout << "Current time in microseconds: " << micros.count() << std::endl;
+}
+
 
 const std::string cMulticastGroup{"239.0.0.5"};
 const std::string cNicIpAddress{"127.0.0.1"};
@@ -29,6 +40,7 @@ void send(const std::vector<uint8_t> &value)
 void onReceive(void)
 {
     std::cout << "\n............. on Receive ............\n";
+    printCurrentTime();
 
     const std::size_t cBufferSize = 5;
 
@@ -49,7 +61,8 @@ void onSend(void)
     while(!mSendingQueue.Empty())
     {
         std::cout << "\n............. on send ............\n";
-        
+        printCurrentTime();
+
         const std::size_t cBufferSize = 256;
         std::vector<uint8_t> _payload;
         bool _dequeued{mSendingQueue.TryDequeue(_payload)};
@@ -61,7 +74,8 @@ void onSend(void)
                 _payload.size(),
                 _buffer.begin());
 
-            bool _sent = client->Send(_buffer, cMulticastGroup, cPort) > 0;
+
+            bool _sent = client->Send(_buffer, cMulticastGroup, cPort) > 0;   
             if (_sent)
             {
                 std::cout << "The client sent data to the server.\n";
@@ -105,8 +119,13 @@ bool trySetup(void)
 void tester(void)
 {
     poller = new Poller();
-    client = new UdpClientServer(cAnyIpAddress, cPort, cNicIpAddress, cMulticastGroup, true);
-    
+    /*  make the message i send i will receive
+    client = new UdpClientServer(cAnyIpAddress, cPort, cNicIpAddress, cMulticastGroup, true); 
+    */
+
+    // make the message i send i wonot recive
+    client = new UdpClientServer(cNicIpAddress, cPort, cNicIpAddress, cMulticastGroup, true);
+
     running = trySetup();
 
     int counter = 0;

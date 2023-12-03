@@ -130,7 +130,9 @@ namespace POSIXNetworkSocketLib
 
             return _result;
         }
-
+        /*
+            fill data, ip of sender and port number of sender
+        */
 
 
         /************************** getter *********************************/

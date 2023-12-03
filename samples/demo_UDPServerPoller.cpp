@@ -1,9 +1,21 @@
 #include <iostream>
 #include <future>
+#include <csignal>
 #include "../include/poller.h"
 #include "../include/UDPClientServer.h"
 
 using namespace POSIXNetworkSocketLib;
+
+// showing sequence only
+#include <chrono>
+void printCurrentTime()
+{
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    auto currentTimeSinceEpoch = currentTime.time_since_epoch();
+    auto micros = std::chrono::duration_cast<std::chrono::microseconds>(currentTimeSinceEpoch);
+    std::cout << "Current time in microseconds: " << micros.count() << std::endl;
+}
+
 
 const int cTimeoutMs = 1;
 const std::string cAnyIpAddress{"0.0.0.0"};
@@ -19,11 +31,12 @@ UdpClientServer *server;
 void onReceive(void)
 {
     std::cout << "\n............. on receive ............\n";
+    printCurrentTime();
 
     const std::size_t cBufferSize = 5;
-
     std::array<uint8_t, cBufferSize> _receiveBuffer;
 
+    // assume someone on same network using same udp port, we want only receive from local parters
     std::string _ipAddress;
     uint16_t _port;
     bool _received = server->Receive(_receiveBuffer, _ipAddress, _port) > 0;
@@ -58,8 +71,13 @@ bool trySetup(void)
 void tester(void)
 {
     poller = new Poller();
-    server = new UdpClientServer(cAnyIpAddress, cPort, cNicIpAddress, cMulticastGroup, true);
 
+    /*  server wonot receive any thing 
+    server = new UdpClientServer(cNicIpAddress, cPort, cNicIpAddress, cMulticastGroup, true);
+    */
+
+    server = new UdpClientServer(cAnyIpAddress, cPort, cNicIpAddress, cMulticastGroup, true);
+    
     running = trySetup();
 
     while (running)
